@@ -6,6 +6,7 @@
 using namespace std;
 
 class Book {
+private:
 	string _name;
 	string _author;
 	string _bookPublisher;
@@ -22,6 +23,11 @@ public:
 	int getYear();
 	int getList();
 	void show(bool trust);
+};
+
+class Labs {
+public:
+	void First();
 };
 
 #endif

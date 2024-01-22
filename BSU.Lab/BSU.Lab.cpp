@@ -1,37 +1,45 @@
 #include <iostream>
+#include <windows.h>
 #include "Labs.h"
+
 using namespace std;
 
 int main()
 {
-	setlocale(LC_ALL, "Russian");
-    Book* books = new Book[5];
-	books[0] = Book("Маргаритка", "Эля", "Бром", 2025, 991);
-	books[1] = Book("Роджерс и Андерс", "Эля", "Тен", 2021, 512);
-	books[2] = Book("Приключения Роба", "Антон", "Тен", 2015, 122);
-	books[3] = Book("Адские робрышки", "Антон", "Бром", 2009, 421);
-	books[4] = Book("Робототехника", "Крон", "Бром", 2015, 421);
-	for (int i = 0; i < 5; i++) {
-		books[i].show(true);
-	}
-	cout << "По автору:" << endl;
-	for (int i = 0; i < 5; i++) {
-		if (books[i].getAuthor() == "Антон") {
-			books[i].show(true);
-		}
-	}
-	cout << "По издателю" << endl;
-	for (int i = 0; i < 5; i++) {
-		if (books[i].getBookPublisher() == "Бром") {
-			books[i].show(true);
-		}
-	}
-	cout << "По году" << endl;
-	for (int i = 0; i < 5; i++) {
-		if (books[i].getYear() == 2015) {
-			books[i].show(true);
-		}
-	}
+    setlocale(LC_ALL, "Russian");
+    Labs engine = Labs();
+    int input = 1;
+    while (input) {
+        system("cls");
+        cout << "Выберите лаборторную работу: 1,2,3,4,5,6,7,8" << endl << "Ввод:";
+        cin >> input;
+        switch (input)
+        {
+        case 1:
+            engine.First();
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+        case 8:
+            break;
+        default:
+            break;
+        }
+        cout << "Введите число для продолжения: ";
+        int temp;
+        cin >> temp;
+    }
 
+    
     return 0;
 }
