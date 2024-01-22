@@ -4,14 +4,15 @@
 
 using namespace std;
 
+
+
 int main()
 {
-    setlocale(LC_ALL, "Russian");
     Labs engine = Labs();
     int input = 1;
     while (input) {
         system("cls");
-        cout << "Выберите лаборторную работу: 1,2,3,4,5,6,7,8" << endl << "Ввод:";
+        cout << "Choice labs: 1,2,3,4,5,6,7,8" << endl << "input:";
         cin >> input;
         switch (input)
         {
@@ -19,8 +20,10 @@ int main()
             engine.First();
             break;
         case 2:
+            engine.Second();
             break;
         case 3:
+            engine.Thirdy();
             break;
         case 4:
             break;
@@ -35,11 +38,9 @@ int main()
         default:
             break;
         }
-        cout << "Введите число для продолжения: ";
+        cout << "Enter digite to continue: ";
         int temp;
         cin >> temp;
     }
-
-
     return 0;
 }
