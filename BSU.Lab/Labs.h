@@ -5,34 +5,23 @@
 
 using namespace std;
 
-struct BookPublisher {
-public:
-	string Name;
-	BookPublisher() {
-
-	}
-};
-
 class Book {
-public:
 	string _name;
 	string _author;
-	BookPublisher _bookPublisher;
+	string _bookPublisher;
 	int _year;
 	int _list;
+public:
 
-	Book() {
-
-	}
-	void set() {
-
-	}
-	void get() {
-
-	}
-	void show() {
-
-	}
+	Book(string name, string author, string bookPublisher, int year, int list);
+	Book();
+	void set(Book book);
+	string getName();
+	string getAuthor();
+	string getBookPublisher();
+	int getYear();
+	int getList();
+	void show(bool trust);
 };
 
 #endif
