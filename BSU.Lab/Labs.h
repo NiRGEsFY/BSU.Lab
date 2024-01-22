@@ -23,6 +23,7 @@ public:
 	int getList();
 	void show(bool trust);
 };
+
 class Matrix {
 private:
 	int** _matrix;
@@ -45,6 +46,8 @@ public:
 	void SetMatrix(Matrix matrix);
 };
 
+bool Quotes(const string& s);
+void QuotesTest(const string& s);
 
 class Labs {
 public:
