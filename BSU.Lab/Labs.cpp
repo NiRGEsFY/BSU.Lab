@@ -1,57 +1,45 @@
-#include "Labs.h"
-
 #include <iostream>
+#include <windows.h>
+#include "Labs.h"
 
 using namespace std;
 
-struct BookPublisher {
-public:
-	string _name;
-	BookPublisher() {
-		_name = "None";
-	}
-	BookPublisher(string name) {
-		_name = name;
-	}
-};
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+    Labs engine = Labs();
+    int input = 1;
+    while (input) {
+        system("cls");
+        cout << "Выберите лаборторную работу: 1,2,3,4,5,6,7,8" << endl << "Ввод:";
+        cin >> input;
+        switch (input)
+        {
+        case 1:
+            engine.First();
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+        case 8:
+            break;
+        default:
+            break;
+        }
+        cout << "Введите число для продолжения: ";
+        int temp;
+        cin >> temp;
+    }
 
-class Book {
-public:
-	string _name;
-	string _author;
-	BookPublisher _bookPublisher;
-	int _year;
-	int _list;
-	Book() {
-		_name = "None";
-		_author = "None";
-		_bookPublisher = BookPublisher();
-		_year = 0;
-		_list = 0;
-	}
-	Book(string name, string author, BookPublisher bookPublisher, int year, int list) {
-		_name = name;
-		_author = author;
-		_bookPublisher = bookPublisher;
-		_year = _year;
-		_list = list;
-	}
-	void set(Book book) {
-		_name = book._name;
-		_author = book._author;
-		_bookPublisher = book._bookPublisher;
-		_year = book._year;
-		_list = book._list;
-	}
-	Book & get() {
-		return *this;
-	}
-	void show(bool trust) {
-		if (trust) {
-			cout << "Book name:" << _name << "| author:" << _author << "| publisher: " << _bookPublisher._name << "| year: " << _year << "| lists: " << _list << endl;
-			return;
-		}
-		cout << "Book name:" << _name << "| author:" << endl;
-	}
 
-};
+    return 0;
+}
