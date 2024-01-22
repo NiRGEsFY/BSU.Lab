@@ -26,6 +26,7 @@ int main()
             engine.Thirdy();
             break;
         case 4:
+            engine.Forth();
             break;
         case 5:
             break;

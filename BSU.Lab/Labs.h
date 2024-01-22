@@ -49,6 +49,21 @@ public:
 bool Quotes(const string& s);
 void QuotesTest(const string& s);
 
+template<class T> class MatrixTemplate {
+private:
+	T** _matrix;
+	int _lenght;
+public:
+	MatrixTemplate();
+	MatrixTemplate(int lenght);
+	MatrixTemplate(T** matrix, int lenght);
+	void Show();
+	T** GetMatrix();
+	int GetLenght();
+	void SetMatrix(T** matrix, int lenght);
+	void SetMatrix(MatrixTemplate matrix);
+};
+
 class Labs {
 public:
 	void First();

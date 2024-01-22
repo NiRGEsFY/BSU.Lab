@@ -44,8 +44,7 @@ Matrix::Matrix(int ** matrix, int lenght) {
 void Matrix::Show() {
 		for (int i = 0; i < _lenght; i++) {
 			for (int j = 0; j < _lenght; j++) {
-				int temp = _matrix[i][j];
-				cout << temp << " | ";
+				cout << _matrix[i][j] << " | ";
 			}
 			cout << endl;
 		}
@@ -182,6 +181,62 @@ void MatrixToSquare(Matrix* matrixArr, int lenght) {
 }
 //Matrix end
 
+//MatrixTemplate start
+template<class T> MatrixTemplate<T>::MatrixTemplate() {
+	_lenght = 2;
+	T** matrix{ new T * [_lenght] {} };
+	_matrix = matrix;
+	for (int i = 0; i < _lenght; i++) {
+		_matrix[i] = new T[_lenght] {};
+	}
+	for (int i = 0; i < _lenght; i++) {
+		for (int j = 0; j < _lenght; j++) {
+			_matrix[i][j] = T();
+		}
+	}
+};
+template<class T> MatrixTemplate<T>::MatrixTemplate(int lenght) {
+	_lenght = lenght;
+	T** matrix{ new T * [_lenght] {} };
+	_matrix = matrix;
+	for (int i = 0; i < _lenght; i++) {
+		_matrix[i] = new T[_lenght]{};
+	}
+	for (int i = 0; i < _lenght; i++) {
+		for (int j = 0; j < _lenght; j++) {
+			_matrix[i][j] = T();
+		}
+	}
+}
+template<class T> MatrixTemplate<T>::MatrixTemplate(T** matrix,int lenght) {
+	_lenght = lenght;
+	_matrix = matrix;
+}
+
+template<class T> void MatrixTemplate<T>::Show() {
+	for (int i = 0; i < _lenght; i++) {
+		for (int j = 0; j < _lenght; j++) {
+			cout << _matrix[i][j] << " | ";
+		}
+		cout << endl;
+	}
+}
+template<class T> T** MatrixTemplate<T>::GetMatrix() {
+	return _matrix;
+};
+template<class T> int MatrixTemplate<T>::GetLenght() {
+	return _lenght;
+}
+template<class T> void MatrixTemplate<T>::SetMatrix(T** matrix, int lenght) {
+	_lenght = lenght;
+	_matrix = matrix;
+};
+template<class T> void MatrixTemplate<T>::SetMatrix(MatrixTemplate matrix) {
+	_lenght = matrix.GetLenght();
+	_matrix = matrix.GetMatrix();
+};
+//MatrixTemplate end
+
 //Book start
 Book::Book() {
 	_name = "None";
@@ -311,5 +366,20 @@ void Labs::Thirdy() {
 	QuotesTest("Empty");
 	QuotesTest("morder[2].End[} = morder.End]{");
 	QuotesTest("{EndToBuild}{{ProStore]}");
+}
+void Labs::Forth() {
+	int lenght = 4;
+	MatrixTemplate<string> matrix = MatrixTemplate<string>(lenght);
+	string** matrixStr = new string*[lenght];
+	for (int i = 0; i < lenght; i++) {
+		matrixStr[i] = new string[lenght] {};
+	}
+	for (int i = 0; i < lenght; i++) {
+		for (int j = 0; j < lenght; j++) {
+			matrixStr[i][j] = "Test";
+		}
+	}
+	matrix.SetMatrix(matrixStr, lenght);
+	matrix.Show();
 }
 //Labs end
