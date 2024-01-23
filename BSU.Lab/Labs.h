@@ -57,6 +57,13 @@ public:
 	MatrixTemplate();
 	MatrixTemplate(int lenght);
 	MatrixTemplate(T** matrix, int lenght);
+	T** AdditionMatrix(MatrixTemplate matrix);
+	void AdditionMatrix(MatrixTemplate matrix, MatrixTemplate matrix2);
+	T** DifferenceMatrix(MatrixTemplate matrix);
+	void DifferenceMatrix(MatrixTemplate matrix, MatrixTemplate matrix2);
+	T** MultiplicationMatrix(MatrixTemplate matrix);
+	void MultiplicationMatrix(MatrixTemplate matrix, MatrixTemplate matrix2);
+	T NormaMatrix();
 	void Show();
 	T** GetMatrix();
 	int GetLenght();

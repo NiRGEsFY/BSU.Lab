@@ -213,6 +213,117 @@ template<class T> MatrixTemplate<T>::MatrixTemplate(T** matrix,int lenght) {
 	_matrix = matrix;
 }
 
+template<class T> T** MatrixTemplate<T>::AdditionMatrix(MatrixTemplate matrix) {
+	T** newMatrix{ new T* [_lenght] {} };
+	for (int i = 0; i < _lenght; i++) {
+		newMatrix[i] = new T[_lenght] {};
+	}
+	if (_lenght == matrix.GetLenght()) {
+		for (int i = 0; i < _lenght; i++) {
+			for (int j = 0; j < _lenght; j++) {
+				newMatrix[i][j] = matrix.GetMatrix()[i][j] + _matrix[i][j];
+			}
+		}
+	}
+	return newMatrix;
+}
+template<class T> void MatrixTemplate<T>::AdditionMatrix(MatrixTemplate matrix, MatrixTemplate matrix2) {
+	T** newMatrix{ new T* [matrix2.GetLenght()] {} };
+	for (int i = 0; i < matrix2.GetLenght(); i++) {
+		newMatrix[i] = new T[matrix2.GetLenght()] {};
+	}
+	if (matrix2.GetLenght() == matrix.GetLenght()) {
+		for (int i = 0; i < matrix2.GetLenght(); i++) {
+			for (int j = 0; j < matrix2.GetLenght(); j++) {
+				newMatrix[i][j] = matrix.GetMatrix()[i][j] + matrix2.GetMatrix()[i][j];
+			}
+		}
+	}
+	_matrix = newMatrix;
+}
+template<class T> T** MatrixTemplate<T>::DifferenceMatrix(MatrixTemplate matrix) {
+	T** newMatrix{ new T * [_lenght] {} };
+	for (int i = 0; i < _lenght; i++) {
+		newMatrix[i] = new T[_lenght]{};
+	}
+	if (_lenght == matrix.GetLenght()) {
+		for (int i = 0; i < _lenght; i++) {
+			for (int j = 0; j < _lenght; j++) {
+				newMatrix[i][j] = matrix.GetMatrix()[i][j] - _matrix[i][j];
+			}
+		}
+	}
+	return newMatrix;
+}
+template<class T> void MatrixTemplate<T>::DifferenceMatrix(MatrixTemplate matrix, MatrixTemplate matrix2) {
+	T** newMatrix{ new T* [matrix2.GetLenght()] {} };
+	for (int i = 0; i < matrix2.GetLenght(); i++) {
+		newMatrix[i] = new T[matrix2.GetLenght()] {};
+	}
+	if (matrix2.GetLenght() == matrix.GetLenght()) {
+		for (int i = 0; i < matrix2.GetLenght(); i++) {
+			for (int j = 0; j < matrix2.GetLenght(); j++) {
+				newMatrix[i][j] = matrix.GetMatrix()[i][j] - matrix2.GetMatrix()[i][j];
+			}
+		}
+	}
+	_matrix = newMatrix;
+}
+template<class T> T** MatrixTemplate<T>::MultiplicationMatrix(MatrixTemplate matrix) {
+	T** newMatrix{ new T* [_lenght] {} };
+	for (int i = 0; i < _lenght; i++) {
+		newMatrix[i] = new T[_lenght] {};
+	}
+	if (_lenght == matrix.GetLenght()) {
+		for (int i = 0; i < _lenght; i++) {
+			for (int j = 0; j < _lenght; j++) {
+				T temp = 0;
+				for (int k = 0; k < _lenght; k++) {
+					temp += _matrix[i][k] * matrix.GetMatrix()[k][j];
+				}
+				newMatrix[i][j] = temp;
+			}
+		}
+	}
+	return newMatrix;
+}
+template<class T> void MatrixTemplate<T>::MultiplicationMatrix(MatrixTemplate matrix, MatrixTemplate matrix2) {
+	T** newMatrix{ new T* [matrix2.GetLenght()] {} };
+	for (int i = 0; i < matrix2.GetLenght(); i++) {
+		newMatrix[i] = new T[matrix2.GetLenght()] {};
+	}
+	if (matrix2.GetLenght() == matrix.GetLenght()) {
+		for (int i = 0; i < matrix2.GetLenght(); i++) {
+			for (int j = 0; j < matrix2.GetLenght(); j++) {
+				T temp = 0;
+				for (int k = 0; k < matrix2.GetLenght(); k++) {
+					temp += matrix2.GetMatrix()[i][k] * matrix.GetMatrix()[k][j];
+				}
+				newMatrix[i][j] = temp;
+			}
+		}
+	}
+	_matrix = newMatrix;
+}
+template<class T> T MatrixTemplate<T>::NormaMatrix() {
+	T max = 0;
+	T temp = 0;
+	for (int i = 0; i < _lenght; i++) {
+		for (int j = 0; j < _lenght; j++) {
+			if (_matrix[j][i] < 0) {
+				temp -= _matrix[j][i];
+			}
+			else {
+				temp += _matrix[j][i];
+			}
+		}
+		if (temp > max) {
+			max = temp;
+		}
+		temp = 0;
+	}
+	return max;
+}
 template<class T> void MatrixTemplate<T>::Show() {
 	for (int i = 0; i < _lenght; i++) {
 		for (int j = 0; j < _lenght; j++) {
@@ -370,9 +481,9 @@ void Labs::Thirdy() {
 void Labs::Forth() {
 	int lenght = 4;
 	MatrixTemplate<string> matrix = MatrixTemplate<string>(lenght);
-	string** matrixStr = new string*[lenght];
+	string** matrixStr = new string * [lenght];
 	for (int i = 0; i < lenght; i++) {
-		matrixStr[i] = new string[lenght] {};
+		matrixStr[i] = new string[lenght]{};
 	}
 	for (int i = 0; i < lenght; i++) {
 		for (int j = 0; j < lenght; j++) {
@@ -381,5 +492,30 @@ void Labs::Forth() {
 	}
 	matrix.SetMatrix(matrixStr, lenght);
 	matrix.Show();
+	cout << endl;
+	double** matrixDouble0 = new double* [lenght];
+	double** matrixDouble1 = new double* [lenght];
+	double** matrixDouble2 = new double* [lenght];
+	srand(time(NULL));
+	for (int i = 0; i < lenght; i++) {
+		matrixDouble0[i] = new double[lenght] {};
+		matrixDouble1[i] = new double[lenght] {};
+		matrixDouble2[i] = new double[lenght] {};
+	}
+	for (int i = 0; i < lenght; i++) {
+		for (int j = 0; j < lenght; j++) {
+			matrixDouble0[i][j] = (double)rand() / 10000;
+			matrixDouble1[i][j] = (double)rand() / 10000;
+		}
+	}
+	MatrixTemplate<double> matrixTemplateDouble0 = MatrixTemplate<double>(matrixDouble0, lenght);
+	MatrixTemplate<double> matrixTemplateDouble1 = MatrixTemplate<double>(matrixDouble1, lenght);
+	MatrixTemplate<double> matrixTemplateDouble2 = MatrixTemplate<double>(matrixTemplateDouble0.DifferenceMatrix(matrixTemplateDouble1), lenght);
+	cout << endl;
+	matrixTemplateDouble0.Show();
+	cout << endl;
+	matrixTemplateDouble1.Show();
+	cout << endl;
+	matrixTemplateDouble2.Show();
 }
 //Labs end
