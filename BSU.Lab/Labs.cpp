@@ -32,6 +32,7 @@ int main()
             engine.Fifth();
             break;
         case 6:
+            engine.Sixth();
             break;
         case 7:
             break;

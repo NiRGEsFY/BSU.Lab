@@ -241,23 +241,11 @@ protected:
 	double _cost;
 	string _name;
 public:
-	Vehicle(double speed = 0) {
+	Vehicle(double speed, int people, double weight, double cost, string name) {
 		_speed = speed;
-	}
-	Vehicle(double speed, int people)
-	:Vehicle(speed){
 		_people = people;
-	}
-	Vehicle(double speed,int people, double weight)
-	:Vehicle(speed,people){
 		_weight = weight;
-	}
-	Vehicle(double speed, int people, double weight,double cost)
-		:Vehicle(speed, people,weight) {
 		_cost = cost;
-	}
-	Vehicle(double speed, int people, double weight, double cost, string name)
-		:Vehicle(speed, people, weight, cost) {
 		_name = name;
 	}
 	double GetSpeed() {
@@ -266,21 +254,12 @@ public:
 	int GetPeople() {
 		return _people;
 	}
-	virtual void Travel(double distance, int people) {
-		
-	}
-	virtual void Travel(double distance, double weight) {
-
-	}
+	virtual void Travel(double distance, int people) {};
+	virtual void Travel(double distance, double weight) {};
 };
 class Car :public Vehicle {
 public:
-	Car() : Vehicle{} {}
-	Car(double speed) : Vehicle{ speed } {}
-	Car(double speed, int people) : Vehicle{speed,people} {}
-	Car(double speed, int people, double weight) : Vehicle{ speed,people,weight } {}
-	Car(double speed, int people, double weight, double cost) : Vehicle{ speed,people,weight,cost } {}
-	Car(double speed, int people, double weight, double cost,string name) : Vehicle{ speed,people,weight,cost,name } {}
+	Car(double speed, int people, double weight, double cost, string name) : Vehicle{ speed,people,weight,cost,name } {}
 	void Travel(double distance, int people) override {
 		int counter = 0;
 		for (int i = people; i > 0; i -= _people) {
@@ -300,13 +279,8 @@ public:
 		cout << _name << " = " << "Time: " << time.ToString() << " || " << "Cost: " << cost << " $" << endl;
 	}
 };
-class Carriage :public Vehicle{
+class Carriage :public Vehicle {
 public:
-	Carriage() : Vehicle{} {}
-	Carriage(double speed) : Vehicle{speed} {}
-	Carriage(double speed, int people) : Vehicle{ speed,people } {}
-	Carriage(double speed, int people, double weight) : Vehicle{ speed,people,weight } {}
-	Carriage(double speed, int people, double weight, double cost) : Vehicle{ speed,people,weight,cost } {}
 	Carriage(double speed, int people, double weight, double cost, string name) : Vehicle{ speed,people,weight,cost,name } {}
 	void Travel(double distance, int people) override {
 		int counter = 0;
@@ -329,11 +303,6 @@ public:
 };
 class Bicycle :public Vehicle {
 public:
-	Bicycle() : Vehicle{} {}
-	Bicycle(double speed) : Vehicle{ speed } {}
-	Bicycle(double speed, int people) : Vehicle{ speed,people } {}
-	Bicycle(double speed, int people, double weight) : Vehicle{ speed,people,weight } {}
-	Bicycle(double speed, int people, double weight, double cost) : Vehicle{ speed,people,weight,cost } {}
 	Bicycle(double speed, int people, double weight, double cost, string name) : Vehicle{ speed,people,weight,cost,name } {}
 	void Travel(double distance, int people) override {
 		int counter = 0;
@@ -636,6 +605,95 @@ void QuotesTest(const string& s) {
 }
 //Stack end
 
+//Point start
+class CPoint {
+protected:
+	double _x;
+	double _y;
+public:
+	CPoint(double x = 0, double y = 0) {
+		_x = x;
+		_y = y;
+	}
+	void SetX(double x) {
+		_x = x;
+	}
+	void SetY(double y) {
+		_y = y;
+	}
+	void SetPoint(CPoint point) {
+		*this = point;
+	}
+	double GetX() {
+		return _x;
+	}
+	double GetY() {
+		return _y;
+	}
+	CPoint GetPoint() {
+		return *this;
+	}
+};
+class CcoloredPoint : public CPoint {
+protected:
+	string _color;
+public:
+	CcoloredPoint(double x = 0, double y = 0, string color = "black") {
+		_x = x;
+		_y = y;
+		_color = color;
+	}
+	string GetColor() {
+		return _color;
+	}
+	void SetColor(string color) {
+		_color = color;
+	}
+}; 
+class CLine : public CPoint{
+protected:
+	CPoint _firstPoint;
+	CPoint _secondPoint;
+public:
+	CLine(CPoint first = CPoint(),CPoint second = CPoint()) {
+		_x = (first.GetX() + second.GetX()) / 2;
+		_y = (first.GetX() + second.GetX()) / 2;
+		_firstPoint = first;
+		_secondPoint = second;
+	}
+	CPoint GetFirstPoint() {
+		return _firstPoint;
+	}
+	CPoint GetSecondPoint() {
+		return _secondPoint;
+	}
+	void SetFirstPoint(CPoint point) {
+		_firstPoint = point;
+	}
+	void SetSecondPoint(CPoint point) {
+		_secondPoint = point;
+	}
+};
+class CcoloredLine : public CLine {
+protected:
+	string _color;
+public:
+	CcoloredLine(CPoint first = CPoint(), CPoint second = CPoint(), string color = "black") {
+		_x = (first.GetX() + second.GetX()) / 2;
+		_y = (first.GetX() + second.GetX()) / 2;
+		_firstPoint = first;
+		_secondPoint = second;
+		_color = color;
+	}
+	string GetColor() {
+		return _color;
+	}
+	void SetColor(string color) {
+		_color = color;
+	}
+};
+//Point end
+
 //Labs start
 void Labs::First() {
 	setlocale(LC_ALL, "Russian");
@@ -744,5 +802,24 @@ void Labs::Fifth() {
 	WriteWay((int) 100, 500);
 	WriteWay((double)1000, 100);
 	WriteWay((double)20000, 500);
+}
+void Labs::Sixth() {
+	CPoint firstPoint = CPoint(5,1);
+	CPoint secondPoint = CPoint(2,7);
+	cout << "First Point X: " << firstPoint.GetX() << " Y: " << firstPoint.GetY() << endl;
+	cout << "Second Point X: " << secondPoint.GetX() << " Y: " << secondPoint.GetY() << endl;
+	CcoloredPoint firstColoredPoint = CcoloredPoint(7,3,"yellow");
+	CcoloredPoint secondColoredPoint = CcoloredPoint(7, 3, "red");
+	cout << "First Colored Point X: " << firstColoredPoint.GetX() << " Y: " << firstColoredPoint.GetY() << " Color: " << firstColoredPoint.GetColor() << endl;
+	cout << "Second Colored X: " << secondColoredPoint.GetX() << " Y: " << secondColoredPoint.GetY() << " Color: " << firstColoredPoint.GetColor() << endl;
+	CLine line = CLine(firstPoint,secondPoint);
+	cout << "Line: " << endl;
+	cout << "First Line Point X: " << line.GetFirstPoint().GetX() << " Y: " << line.GetFirstPoint().GetY() << endl;
+	cout << "Second Line Point X: " << line.GetSecondPoint().GetX() << " Y: " << line.GetSecondPoint().GetY() << endl;
+	CcoloredLine coloredLine = CcoloredLine(CPoint(8,1),CPoint(15,-5),"green");
+	cout << "Colored Line: " << endl;
+	cout << "First Line Point X: " << coloredLine.GetFirstPoint().GetX() << " Y: " << coloredLine.GetFirstPoint().GetY() << endl;
+	cout << "Second Line Point X: " << coloredLine.GetSecondPoint().GetX() << " Y: " << coloredLine.GetSecondPoint().GetY() << endl;
+	cout << "Color: " << coloredLine.GetColor() << endl;
 }
 //Labs end

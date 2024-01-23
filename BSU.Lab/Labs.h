@@ -74,7 +74,6 @@ public:
 	void SetMatrix(T** matrix, int lenght);
 	void SetMatrix(MatrixTemplate matrix);
 };
-
 class Labs {
 public:
 	void First();
