@@ -82,8 +82,6 @@ public:
 	void Forth();
 	void Fifth();
 	void Sixth();
-	void Seventh();
-	void Eighth();
 };
 
 #endif

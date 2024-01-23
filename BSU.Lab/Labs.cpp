@@ -34,10 +34,6 @@ int main()
         case 6:
             engine.Sixth();
             break;
-        case 7:
-            break;
-        case 8:
-            break;
         default:
             break;
         }
