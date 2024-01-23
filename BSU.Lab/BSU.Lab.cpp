@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <iostream>
 #include <stack>
+#include <sstream>
 
 using namespace std;
 
@@ -188,16 +189,59 @@ void MatrixToSquare(Matrix* matrixArr, int lenght) {
 //Matrix end
 
 //Vehicle start
-class Vehicle {
+class Time {
 private:
+	int _days;
+	int _hours;
+	int _minuts;
+	int _seconds;
+public:
+	Time(double seconds) {
+		_seconds = (int)seconds % 60;
+		_minuts = (int)seconds / 60 % 60;
+		_hours = (int)seconds / 3600 % 24;
+		_days = (int)seconds / 86400;
+	}
+	Time(int seconds) {
+		_seconds = seconds % 60;
+		_minuts = seconds / 60;
+		_hours = seconds / 3600;
+		_days = seconds / 86400;
+	}
+	string ToString() {
+		if (_seconds == 0 && _minuts == 0 && _hours == 0 && _days == 0) {
+			return "";
+		}
+		if (_minuts == 0 && _hours == 0 && _days == 0) {
+			ostringstream  temp;
+			temp << " Sec: " << _seconds;
+			return temp.str();
+		}
+		if (_hours == 0 && _days == 0) {
+			ostringstream  temp;
+			temp << "Min: " << _minuts << " Sec: " << _seconds;
+			return temp.str();
+		}
+		if (_days == 0) {
+			ostringstream  temp;
+			temp << "Hours: " << _hours<< " Min: " << _minuts << " Sec: " << _seconds;
+			return temp.str();
+		}
+		ostringstream  temp;
+		temp << "Days: " << _days << " Hours: " << _hours << " Min: " << _minuts << " Sec: " << _seconds;
+		return temp.str();
+
+	}
+};
+class Vehicle {
+protected:
 	double _speed;
 	int _people;
 	double _weight;
+	double _cost;
+	string _name;
 public:
-	Vehicle() {
-		_speed = 0;
-	}
-	Vehicle(double speed) {
+	Vehicle(double speed = 0) {
 		_speed = speed;
 	}
 	Vehicle(double speed, int people)
@@ -208,16 +252,24 @@ public:
 	:Vehicle(speed,people){
 		_weight = weight;
 	}
+	Vehicle(double speed, int people, double weight,double cost)
+		:Vehicle(speed, people,weight) {
+		_cost = cost;
+	}
+	Vehicle(double speed, int people, double weight, double cost, string name)
+		:Vehicle(speed, people, weight, cost) {
+		_name = name;
+	}
 	double GetSpeed() {
 		return _speed;
 	}
 	int GetPeople() {
 		return _people;
 	}
-	virtual void Travel(double distance, int people, double cost) {
+	virtual void Travel(double distance, int people) {
 		
 	}
-	virtual void Travel(double distance, double weight, double cost) {
+	virtual void Travel(double distance, double weight) {
 
 	}
 };
@@ -227,24 +279,52 @@ public:
 	Car(double speed) : Vehicle{ speed } {}
 	Car(double speed, int people) : Vehicle{speed,people} {}
 	Car(double speed, int people, double weight) : Vehicle{ speed,people,weight } {}
-	void Travel(double distance, int people, double cost) override {
-		cout << GetPeople();
+	Car(double speed, int people, double weight, double cost) : Vehicle{ speed,people,weight,cost } {}
+	Car(double speed, int people, double weight, double cost,string name) : Vehicle{ speed,people,weight,cost,name } {}
+	void Travel(double distance, int people) override {
+		int counter = 0;
+		for (int i = people; i > 0; i -= _people) {
+			counter++;
+		}
+		Time time = Time((distance / _speed) * counter * 3600);
+		double cost = (_cost * distance * counter) / 2000;
+		cout << _name << " = " << "Time: " << time.ToString() << " || " << "Cost: " << cost << " $" << endl;
 	}
-	void Travel(double distance, double weight, double cost) override {
-
+	void Travel(double distance, double weight) override {
+		int counter = 0;
+		for (double i = weight; i > 0; i -= _weight) {
+			counter++;
+		}
+		Time time = Time((distance / _speed) * counter * 3600);
+		double cost = (_cost * distance * counter) / 2000;
+		cout << _name << " = " << "Time: " << time.ToString() << " || " << "Cost: " << cost << " $" << endl;
 	}
 };
-class Ñarriage :public Vehicle{
+class Carriage :public Vehicle{
 public:
-	Ñarriage() : Vehicle{} {}
-	Ñarriage(double speed) : Vehicle{speed} {}
-	Ñarriage(double speed, int people) : Vehicle{ speed,people } {}
-	Ñarriage(double speed, int people, double weight) : Vehicle{ speed,people,weight } {}
-	void Travel(double distance, int people, double cost) override {
-
+	Carriage() : Vehicle{} {}
+	Carriage(double speed) : Vehicle{speed} {}
+	Carriage(double speed, int people) : Vehicle{ speed,people } {}
+	Carriage(double speed, int people, double weight) : Vehicle{ speed,people,weight } {}
+	Carriage(double speed, int people, double weight, double cost) : Vehicle{ speed,people,weight,cost } {}
+	Carriage(double speed, int people, double weight, double cost, string name) : Vehicle{ speed,people,weight,cost,name } {}
+	void Travel(double distance, int people) override {
+		int counter = 0;
+		for (int i = people; i > 0; i -= _people) {
+			counter++;
+		}
+		Time time = Time((distance / _speed) * counter * 3600);
+		double cost = (_cost * distance * counter) / 2000;
+		cout << _name << " = " << "Time: " << time.ToString() << " || " << "Cost: " << cost << " $" << endl;
 	}
-	void Travel(double distance, double weight, double cost) override {
-
+	void Travel(double distance, double weight) override {
+		int counter = 0;
+		for (double i = weight; i > 0; i -= _weight) {
+			counter++;
+		}
+		Time time = Time((distance / _speed) * counter * 3600);
+		double cost = (_cost * distance * counter) / 2000;
+		cout << _name << " = " << "Time: " << time.ToString() << " || " << "Cost: " << cost << " $" << endl;
 	}
 };
 class Bicycle :public Vehicle {
@@ -253,13 +333,66 @@ public:
 	Bicycle(double speed) : Vehicle{ speed } {}
 	Bicycle(double speed, int people) : Vehicle{ speed,people } {}
 	Bicycle(double speed, int people, double weight) : Vehicle{ speed,people,weight } {}
-	void Travel(double distance, int people, double cost) override {
-
+	Bicycle(double speed, int people, double weight, double cost) : Vehicle{ speed,people,weight,cost } {}
+	Bicycle(double speed, int people, double weight, double cost, string name) : Vehicle{ speed,people,weight,cost,name } {}
+	void Travel(double distance, int people) override {
+		int counter = 0;
+		for (int i = people; i > 0; i -= _people) {
+			counter++;
+		}
+		Time time = Time((distance / _speed) * counter * 3600);
+		double cost = (_cost * distance * counter) / 2000;
+		cout << _name << " = " << "Time: " << time.ToString() << " || " << "Cost: " << cost << " $" << endl;
 	}
-	void Travel(double distance, double weight, double cost) override {
-
+	void Travel(double distance, double weight) override {
+		int counter = 0;
+		for (double i = weight; i > 0; i -= _weight) {
+			counter++;
+		}
+		Time time = Time((distance / _speed) * counter * 3600);
+		double cost = (_cost * distance * counter) / 2000;
+		cout << _name << " = " << "Time: " << time.ToString() << " || " << "Cost: " << cost << " $" << endl;
 	}
 };
+void WriteWay(int people, int distance) {
+	Car lightCar = Car(120, 4, 300, 1,"Light Car");
+	Car heavyCar = Car(90, 3, 8000, 3, "Heavy Car");
+	Car busCar = Car(70, 30, 50, 2.5, "Bus");
+	Bicycle smallBicycle = Bicycle(10, 2, 5, 0.01, "Small Bicycle");
+	Bicycle smartBicycle = Bicycle(20, 1, 3, 0.01, "Smart Bicycle");
+	Bicycle mountainBicycle = Bicycle(15, 1, 10, 0.01 , "Mountain Bicycle");
+	Carriage carriage = Carriage(15, 20, 500, 0.25, "Carriage");
+
+	cout << "Distance '"<< distance << "', people '"<< people <<"':" << endl;
+	lightCar.Travel(distance, (int)people);
+	heavyCar.Travel(distance, (int)people);
+	busCar.Travel(distance, (int)people);
+	smallBicycle.Travel(distance, (int)people);
+	smartBicycle.Travel(distance, (int)people);
+	mountainBicycle.Travel(distance, (int)people);
+	carriage.Travel(distance, (int)people);
+	cout << endl;
+
+}
+void WriteWay(double weight, int distance) {
+	Car lightCar = Car(120, 4, 300, 1, "Light Car");
+	Car heavyCar = Car(90, 3, 8000, 3, "Heavy Car");
+	Car busCar = Car(70, 30, 50, 2.5, "Bus");
+	Bicycle smallBicycle = Bicycle(10, 2, 5, 0.01, "Small Bicycle");
+	Bicycle smartBicycle = Bicycle(20, 1, 3, 0.01, "Smart Bicycle");
+	Bicycle mountainBicycle = Bicycle(15, 1, 10, 0.01, "Mountain Bicycle");
+	Carriage carriage = Carriage(15, 20, 500, 0.25, "Carriage");
+
+	cout << "Distance '" << distance << "', weight '" << weight << "':" << endl;
+	lightCar.Travel(distance, weight);
+	heavyCar.Travel(distance, weight);
+	busCar.Travel(distance, weight);
+	smallBicycle.Travel(distance, weight);
+	smartBicycle.Travel(distance, weight);
+	mountainBicycle.Travel(distance, weight);
+	carriage.Travel(distance, weight);
+	cout << endl;
+}
 //Vehicle end
 
 //MatrixTemplate start
@@ -607,11 +740,9 @@ void Labs::Forth() {
 	matrixTemplateDouble2.Show();
 }
 void Labs::Fifth() {
-	Car car = Car(1,1,1);
-	car.Travel(1,1,1);
-	Bicycle bicycle = Bicycle();
-	bicycle.Travel(1,1,1);
-	Ñarriage carriage = Ñarriage();
-	carriage.Travel(1,1,1);
+	WriteWay((int) 25, 50);
+	WriteWay((int) 100, 500);
+	WriteWay((double)1000, 100);
+	WriteWay((double)20000, 500);
 }
 //Labs end
