@@ -29,6 +29,7 @@ int main()
             engine.Forth();
             break;
         case 5:
+            engine.Fifth();
             break;
         case 6:
             break;

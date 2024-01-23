@@ -24,6 +24,8 @@ public:
 	void show(bool trust);
 };
 
+
+
 class Matrix {
 private:
 	int** _matrix;
@@ -37,6 +39,8 @@ public:
 	int GetLenght();
 	int** AdditionMatrix(Matrix matrix);
 	void AdditionMatrix(Matrix matrix, Matrix matrix2);
+	Matrix operator+(Matrix matrix);
+	Matrix operator-(Matrix matrix);
 	int** DifferenceMatrix(Matrix matrix);
 	void DifferenceMatrix(Matrix matrix, Matrix matrix2);
 	int** MultiplicationMatrix(Matrix matrix);

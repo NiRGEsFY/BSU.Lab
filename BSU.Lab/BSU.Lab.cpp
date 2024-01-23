@@ -83,6 +83,12 @@ void Matrix::AdditionMatrix(Matrix matrix, Matrix matrix2) {
 		}
 		_matrix = newMatrix;
 	}
+Matrix Matrix::operator+(Matrix matrix) {
+	return Matrix(matrix.AdditionMatrix(*this),this->_lenght);
+};
+Matrix Matrix::operator-(Matrix matrix) {
+	return Matrix(matrix.DifferenceMatrix(*this), this->_lenght);
+};
 int** Matrix::DifferenceMatrix(Matrix matrix) {
 		int** newMatrix{ new int* [_lenght] {} };
 		for (int i = 0; i < _lenght; i++) {
@@ -181,6 +187,81 @@ void MatrixToSquare(Matrix* matrixArr, int lenght) {
 }
 //Matrix end
 
+//Vehicle start
+class Vehicle {
+private:
+	double _speed;
+	int _people;
+	double _weight;
+public:
+	Vehicle() {
+		_speed = 0;
+	}
+	Vehicle(double speed) {
+		_speed = speed;
+	}
+	Vehicle(double speed, int people)
+	:Vehicle(speed){
+		_people = people;
+	}
+	Vehicle(double speed,int people, double weight)
+	:Vehicle(speed,people){
+		_weight = weight;
+	}
+	double GetSpeed() {
+		return _speed;
+	}
+	int GetPeople() {
+		return _people;
+	}
+	virtual void Travel(double distance, int people, double cost) {
+		
+	}
+	virtual void Travel(double distance, double weight, double cost) {
+
+	}
+};
+class Car :public Vehicle {
+public:
+	Car() : Vehicle{} {}
+	Car(double speed) : Vehicle{ speed } {}
+	Car(double speed, int people) : Vehicle{speed,people} {}
+	Car(double speed, int people, double weight) : Vehicle{ speed,people,weight } {}
+	void Travel(double distance, int people, double cost) override {
+		cout << GetPeople();
+	}
+	void Travel(double distance, double weight, double cost) override {
+
+	}
+};
+class Ñarriage :public Vehicle{
+public:
+	Ñarriage() : Vehicle{} {}
+	Ñarriage(double speed) : Vehicle{speed} {}
+	Ñarriage(double speed, int people) : Vehicle{ speed,people } {}
+	Ñarriage(double speed, int people, double weight) : Vehicle{ speed,people,weight } {}
+	void Travel(double distance, int people, double cost) override {
+
+	}
+	void Travel(double distance, double weight, double cost) override {
+
+	}
+};
+class Bicycle :public Vehicle {
+public:
+	Bicycle() : Vehicle{} {}
+	Bicycle(double speed) : Vehicle{ speed } {}
+	Bicycle(double speed, int people) : Vehicle{ speed,people } {}
+	Bicycle(double speed, int people, double weight) : Vehicle{ speed,people,weight } {}
+	void Travel(double distance, int people, double cost) override {
+
+	}
+	void Travel(double distance, double weight, double cost) override {
+
+	}
+};
+//Vehicle end
+
 //MatrixTemplate start
 template<class T> MatrixTemplate<T>::MatrixTemplate() {
 	_lenght = 2;
@@ -212,7 +293,6 @@ template<class T> MatrixTemplate<T>::MatrixTemplate(T** matrix,int lenght) {
 	_lenght = lenght;
 	_matrix = matrix;
 }
-
 template<class T> T** MatrixTemplate<T>::AdditionMatrix(MatrixTemplate matrix) {
 	T** newMatrix{ new T* [_lenght] {} };
 	for (int i = 0; i < _lenght; i++) {
@@ -470,9 +550,17 @@ void Labs::Second() {
 		matrixArr[i].Show();
 		cout << endl;
 	}
+	Matrix matrix = Matrix(4);
+	Matrix matrix2 = Matrix(4);
+	Matrix matrix3 = Matrix(matrix + matrix2);
+	matrix.Show();
+	cout << '+' << endl;
+	matrix2.Show();
+	cout << '=' << endl;
+	matrix3.Show();
 }
 void Labs::Thirdy() {
-	QuotesTest("{test(a) = test[b]}");
+	QuotesTest("{test(a) = test[b}");
 	QuotesTest("test[1].WriteLine(End)");
 	QuotesTest("Empty");
 	QuotesTest("morder[2].End[} = morder.End]{");
@@ -517,5 +605,13 @@ void Labs::Forth() {
 	matrixTemplateDouble1.Show();
 	cout << endl;
 	matrixTemplateDouble2.Show();
+}
+void Labs::Fifth() {
+	Car car = Car(1,1,1);
+	car.Travel(1,1,1);
+	Bicycle bicycle = Bicycle();
+	bicycle.Travel(1,1,1);
+	Ñarriage carriage = Ñarriage();
+	carriage.Travel(1,1,1);
 }
 //Labs end
