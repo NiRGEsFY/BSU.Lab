@@ -23,9 +23,6 @@ public:
 	int getList();
 	void show(bool trust);
 };
-
-
-
 class Matrix {
 private:
 	int** _matrix;
@@ -49,10 +46,8 @@ public:
 	void SetMatrix(int** matrix, int lenght);
 	void SetMatrix(Matrix matrix);
 };
-
 bool Quotes(const string& s);
 void QuotesTest(const string& s);
-
 template<class T> class MatrixTemplate {
 private:
 	T** _matrix;
@@ -83,5 +78,4 @@ public:
 	void Fifth();
 	void Sixth();
 };
-
 #endif
