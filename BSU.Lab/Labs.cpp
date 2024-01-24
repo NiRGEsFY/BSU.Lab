@@ -10,7 +10,7 @@ int main()
     int input = 1;
     while (input) {
         system("cls");
-        cout << "Choice labs: 1,2,3,4,5,6,7,8" << endl << "input:";
+        cout << "Choice labs: 1,2,3,4,5,6" << endl << "input:";
         cin >> input;
         switch (input)
         {

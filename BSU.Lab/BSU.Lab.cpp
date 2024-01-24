@@ -696,7 +696,6 @@ public:
 
 //Labs start
 void Labs::First() {
-	setlocale(LC_ALL, "Russian");
 	Book* books = new Book[5];
 	books[0] = Book("Trone of god", "Tom", "RedCon", 2025, 991);
 	books[1] = Book("End Worm", "Tom", "RedCon", 2021, 512);
